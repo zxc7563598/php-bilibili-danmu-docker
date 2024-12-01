@@ -60,6 +60,3 @@ RUN chmod -R 777 /var/www/bilibili_danmu
 
 # 添加 cron 任务
 RUN echo "0 * * * * /var/www/bilibili_danmu/check_and_update.sh" > /etc/crontabs/root
-
-# 启动 cron 服务
-CMD ["sh", "-c", "crond && tail -f /dev/null"]
