@@ -1,0 +1,36 @@
+services:
+  php:
+    build: .
+    container_name: php
+    command: sh -c "sh setup.sh && php start.php start -d && tail -f /dev/null"
+    volumes:
+      - /var/www/bilibili_danmu
+    networks:
+      - webnet
+    expose:
+      - "7776"  # 暴露 7776 端口（供 nginx 访问）
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - .:/var/www/bilibili_danmu
+    ports:
+      - "7777:80"  # 通过宿主机 7777 端口访问
+    networks:
+      - webnet
+    depends_on:
+      - php
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379"  # 通过宿主机 7777 端口访问
+    networks:
+      - webnet
+
+networks:
+  webnet:
+    driver: bridge
