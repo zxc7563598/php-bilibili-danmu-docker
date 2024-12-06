@@ -26,7 +26,8 @@ RUN apk update && apk add --no-cache \
     freetype-dev \
     $PHPIZE_DEPS \
     redis \
-    busybox-suid  # 添加 cron 支持
+    busybox-suid \
+    mysql-client
 
 # 安装 PHP 扩展
 RUN docker-php-ext-install pdo_mysql pcntl
@@ -60,3 +61,6 @@ RUN chmod -R 777 /var/www/bilibili_danmu
 
 # 添加 cron 任务
 RUN echo "0 * * * * /var/www/bilibili_danmu/check_and_update.sh" > /etc/crontabs/root
+
+# 执行脚本或启动命令时，保持容器持续运行
+CMD ["sh", "-c", "sh setup.sh && php start.php start -d && crond && tail -f /dev/null"]
