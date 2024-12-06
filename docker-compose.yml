@@ -6,7 +6,6 @@ services:
       MYSQL_ROOT_PASSWORD: init0925  # 项目启动后会被自动替换，无需在意
     volumes:
       - ./mysql:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # 添加初始化 SQL 文件
     ports:
       - "3307:3306"
     networks:
