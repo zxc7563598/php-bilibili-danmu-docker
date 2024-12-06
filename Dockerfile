@@ -8,6 +8,7 @@ ENV TZ=Asia/Shanghai
 
 # 更新软件包列表并安装系统依赖
 RUN apk update && apk add --no-cache \
+    vim \
     bash \
     git \
     curl \
