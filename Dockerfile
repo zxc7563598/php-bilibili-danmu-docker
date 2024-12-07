@@ -57,8 +57,8 @@ RUN git clone https://github.com/zxc7563598/php-bilibili-danmu.git /var/www/bili
 # 安装 PHP 依赖（生产环境中使用 --no-dev）
 RUN composer install
 
-# 递归设置 777 权限
-RUN chmod -R 777 /var/www/bilibili_danmu
+# 给予权限
+RUN chmod -R +x /var/www/bilibili_danmu
 
 # 添加 cron 任务
 RUN echo "0 * * * * /var/www/bilibili_danmu/check_and_update.sh" > /etc/crontabs/root
