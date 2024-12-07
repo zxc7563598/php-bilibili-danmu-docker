@@ -17,7 +17,7 @@ services:
     container_name: php
     command: sh -c "sh setup.sh >> /var/log/setup.log && php start.php start -d && crond && tail -f /dev/null"
     volumes:
-      - /var/www/bilibili_danmu
+      - ./php:/var/www/bilibili_danmu
     networks:
       - webnet
     expose:
