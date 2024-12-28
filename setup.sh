@@ -2,7 +2,7 @@
 
 ## 创建目录
 mkdir -p ./php
-mkdir -p ./mysql
+mkdir -p ./mysql/data
 mkdir -p ./log
 
 ## 拉取项目
