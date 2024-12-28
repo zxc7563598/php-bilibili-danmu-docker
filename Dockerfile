@@ -52,9 +52,8 @@ RUN pecl install brotli \
 # 设置工作目录
 WORKDIR /var/www/bilibili_danmu
 
-# 复制项目文件到容器中
-# 不需要 git clone，直接依赖挂载的本地 php 目录
-RUN composer install
+# 复制项目文件到容器中（此时不需要挂载，直接放到工作目录）
+COPY ./php /var/www/bilibili_danmu
 
 # 添加 cron 任务
 RUN echo "0 * * * * /var/www/bilibili_danmu/check_and_update.sh" > /etc/crontabs/root
