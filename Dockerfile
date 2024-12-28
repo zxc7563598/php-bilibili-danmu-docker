@@ -3,10 +3,10 @@ FROM php:8.2-cli-alpine
 # 安装 Composer
 COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
 
-# 设置环境变量
+# 设置时区
 ENV TZ=Asia/Shanghai
 
-# 更新软件包列表并安装系统依赖
+# 更新包并安装依赖
 RUN apk update && apk add --no-cache \
     vim \
     bash \
@@ -28,7 +28,8 @@ RUN apk update && apk add --no-cache \
     $PHPIZE_DEPS \
     redis \
     busybox-suid \
-    mysql-client
+    mysql-client \
+    util-linux
 
 # 安装 PHP 扩展
 RUN docker-php-ext-install pdo_mysql pcntl
@@ -52,13 +53,8 @@ RUN pecl install brotli \
 WORKDIR /var/www/bilibili_danmu
 
 # 复制项目文件到容器中
-RUN git clone https://github.com/zxc7563598/php-bilibili-danmu.git /var/www/bilibili_danmu
-
-# 安装 PHP 依赖（生产环境中使用 --no-dev）
+# 不需要 git clone，直接依赖挂载的本地 php 目录
 RUN composer install
-
-# 给予权限
-RUN chmod -R +x /var/www/bilibili_danmu
 
 # 添加 cron 任务
 RUN echo "0 * * * * /var/www/bilibili_danmu/check_and_update.sh" > /etc/crontabs/root
