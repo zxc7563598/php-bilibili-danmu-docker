@@ -5,8 +5,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: init0925
     volumes:
-      - ./mysql/data:/var/lib/mysql
-      - ./mysql/conf.d:/etc/mysql/conf.d
+      - ./mysql:/var/lib/mysql
     ports:
       - "3307:3306"
     networks:
