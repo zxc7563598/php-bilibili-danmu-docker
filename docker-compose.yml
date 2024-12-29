@@ -3,14 +3,20 @@ services:
     image: mysql:8.0
     container_name: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: init0925  # 项目启动后会被自动替换，无需在意
+      MYSQL_ROOT_PASSWORD: init0925
     volumes:
       - ./mysql:/var/lib/mysql
     ports:
       - "3307:3306"
     networks:
       - webnet
-    command: --default-authentication-plugin=mysql_native_password --skip-ssl  # 设置默认认证插件
+    command: --default-authentication-plugin=mysql_native_password --skip-ssl
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
 
   php:
     build: .
@@ -22,6 +28,8 @@ services:
       - webnet
     expose:
       - "7776"
+    depends_on:
+      - mysql
 
   nginx:
     image: nginx:latest
