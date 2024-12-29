@@ -36,7 +36,7 @@ services:
     container_name: nginx
     volumes:
       - ./nginx:/etc/nginx/conf.d
-      - ./:/var/www/bilibili_danmu
+      - ./php:/var/www/bilibili_danmu
     ports:
       - "7777:80"
       - "5177:5177"
