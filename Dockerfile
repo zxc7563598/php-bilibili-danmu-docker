@@ -56,4 +56,4 @@ WORKDIR /var/www/bilibili_danmu
 COPY ./php /var/www/bilibili_danmu
 
 # 添加 cron 任务
-RUN echo "0 * * * * /var/www/bilibili_danmu/check_and_update.sh" > /etc/crontabs/root
+RUN echo "0 * * * * /var/www/bilibili_danmu/scripts/check_for_updates.sh" > /etc/crontabs/root
