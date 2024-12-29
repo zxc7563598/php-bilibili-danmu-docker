@@ -40,16 +40,16 @@ RUN docker-php-ext-install pdo_mysql pcntl
 RUN docker-php-ext-configure gd \
     --with-jpeg \
     --with-webp \
-    --with-freetype &&
-    docker-php-ext-install gd
+    --with-freetype \
+    && docker-php-ext-install gd
 
 # 安装 PHP Redis 扩展
-RUN pecl install redis &&
-    docker-php-ext-enable redis
+RUN pecl install redis \
+    && docker-php-ext-enable redis
 
 # 安装 PHP Brotli 扩展
-RUN pecl install brotli &&
-    docker-php-ext-enable brotli
+RUN pecl install brotli \
+    && docker-php-ext-enable brotli
 
 # 设置工作目录
 WORKDIR /var/www/bilibili_danmu
@@ -58,4 +58,4 @@ WORKDIR /var/www/bilibili_danmu
 COPY ./php /var/www/bilibili_danmu
 
 # 添加 cron 任务
-RUN echo "0 * * * * /var/www/bilibili_danmu/scripts/check_for_updates.sh" >/etc/crontabs/root
+RUN echo "0 * * * * /var/www/bilibili_danmu/scripts/check_for_updates.sh" > /etc/crontabs/root
