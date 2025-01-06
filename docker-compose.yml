@@ -39,7 +39,7 @@ services:
       - ./php:/var/www/bilibili_danmu
     ports:
       - "7777:80"
-      - "5177:5177"
+      - "5177:5176"
     networks:
       - webnet
     depends_on:
