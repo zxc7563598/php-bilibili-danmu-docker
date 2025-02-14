@@ -31,7 +31,8 @@ RUN apk update && apk add --no-cache \
     mysql-client \
     util-linux \
     nodejs \
-    npm
+    npm \
+    sqlite-dev
 
 # 安装 PHP 扩展
 RUN docker-php-ext-install pdo_mysql pcntl
