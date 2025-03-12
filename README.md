@@ -10,6 +10,11 @@
 - **全自动运行**：支持自动启动、守护进程运行，减少维护成本。
 - **平台兼容性**：适用于所有支持 Docker 的设备。
 
+
+文字教程：[点击查看](https://hejunjie.life/posts/b06795f9.html)
+
+视频教程：[点击查看](https://www.bilibili.com/video/BV1PBrSYxEQn)
+
 ---
 
 ## 快速开始
