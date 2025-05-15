@@ -19,7 +19,9 @@ services:
       timeout: 10s
 
   php:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.php
     container_name: php
     command: sh -c "sleep 10 && composer install && sh ./scripts/init_project.sh >> /var/log/init_project.log && crond && tail -f /dev/null"
     volumes:
@@ -32,7 +34,9 @@ services:
       - mysql
 
   nginx:
-    image: nginx:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
     container_name: nginx
     volumes:
       - ./nginx:/etc/nginx/conf.d
