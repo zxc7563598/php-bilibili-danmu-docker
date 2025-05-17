@@ -1,5 +1,7 @@
 # php-bilibili-danmu-docker
 
+⚠️ 本项目仅供学习交流使用，禁止用于商业或非法用途。
+
 这是 [php-bilibili-danmu](https://github.com/zxc7563598/php-bilibili-danmu) 项目的 Docker 配置文件，旨在提供一键式的 Docker 环境搭建，帮助用户快速部署哔哩哔哩直播机器人。
 
 ---
