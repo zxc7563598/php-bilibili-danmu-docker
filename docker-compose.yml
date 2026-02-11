@@ -1,7 +1,9 @@
+version: "3.9"
+
 services:
-  mysql:
+  danmu-mysql:
     image: mysql:8.0
-    container_name: mysql
+    container_name: danmu-mysql
     environment:
       MYSQL_ROOT_PASSWORD: init0925
     volumes:
@@ -9,7 +11,7 @@ services:
     ports:
       - "3307:3306"
     networks:
-      - webnet
+      - danmu-net
     command: --default-authentication-plugin=mysql_native_password
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
@@ -17,27 +19,37 @@ services:
       retries: 5
       start_period: 30s
       timeout: 10s
+    restart: unless-stopped
 
-  php:
+  danmu-php:
     build:
       context: .
       dockerfile: Dockerfile.php
-    container_name: php
-    command: sh -c "sleep 10 && composer install && sh ./scripts/init_project.sh >> /var/log/init_project.log && crond && tail -f /dev/null"
+    container_name: danmu-php
+    command: >
+      sh -c "
+        sleep 10 &&
+        composer install &&
+        sh ./scripts/init_project.sh >> /var/log/init_project.log 2>&1 &&
+        crond &&
+        tail -f /dev/null
+      "
     volumes:
       - ./php:/var/www/bilibili_danmu
     networks:
-      - webnet
+      - danmu-net
     expose:
       - "7776"
     depends_on:
-      - mysql
+      danmu-mysql:
+        condition: service_healthy
+    restart: unless-stopped
 
-  nginx:
+  danmu-nginx:
     build:
       context: .
       dockerfile: Dockerfile.nginx
-    container_name: nginx
+    container_name: danmu-nginx
     volumes:
       - ./nginx:/etc/nginx/conf.d
       - ./php:/var/www/bilibili_danmu
@@ -45,16 +57,18 @@ services:
       - "7777:80"
       - "5177:5176"
     networks:
-      - webnet
+      - danmu-net
     depends_on:
-      - php
+      - danmu-php
+    restart: unless-stopped
 
-  redis:
+  danmu-redis:
     image: redis:latest
-    container_name: redis
+    container_name: danmu-redis
     networks:
-      - webnet
+      - danmu-net
+    restart: unless-stopped
 
 networks:
-  webnet:
+  danmu-net:
     driver: bridge
