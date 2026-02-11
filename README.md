@@ -45,6 +45,11 @@ curl -fsSL https://bilibili-danmu-scripts.oss-cn-hongkong.aliyuncs.com/install-d
 
 > 购买服务器不知道如何使用的看下方「一些问题」中的「购买了服务器要如何使用」
 
+> 此命令仅适用于全新服务器（未安装任何运行环境）的情况
+> 脚本会自动安装 Docker，并通过 Docker 将本项目部署到 /opt/bilibili-robots 目录
+> 默认的 docker-compose 会启动 nginx、php、mysql、redis 四个容器
+> 如果你已有服务器环境或已安装相关服务，或希望忽略某些容器，请前往[说明文档](https://hejunjie.life/danmusuite/start/auto-deploy)查看并确认具体情况
+
 ### 手动部署方案
 
 > 以下是手动部署项目的推荐流程，适合具备基本 PHP 环境搭建经验的用户。
