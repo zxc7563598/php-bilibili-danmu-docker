@@ -32,7 +32,8 @@ RUN apk update && apk add --no-cache \
     util-linux \
     nodejs \
     npm \
-    sqlite-dev
+    sqlite-dev \
+    iproute2
 
 # 安装 PHP 扩展
 RUN docker-php-ext-install pdo_mysql pcntl
@@ -54,9 +55,6 @@ RUN pecl install brotli \
 
 # 设置工作目录
 WORKDIR /var/www/bilibili_danmu
-
-# 复制项目文件到容器中（此时不需要挂载，直接放到工作目录）
-COPY ./php /var/www/bilibili_danmu
 
 # 添加 cron 任务
 RUN echo "0 * * * * /var/www/bilibili_danmu/scripts/check_for_updates.sh" > /etc/crontabs/root
