@@ -4,13 +4,14 @@ services:
     container_name: danmu-mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-init0925}
+      TZ: Asia/Shanghai
     volumes:
       - ./mysql:/var/lib/mysql
     ports:
       - "${MYSQL_PORT:-3307}:3306"
     networks:
       - danmu-net
-    command: --default-authentication-plugin=mysql_native_password
+    command: --default-authentication-plugin=mysql_native_password --default-time-zone=+08:00
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s

@@ -33,7 +33,8 @@ RUN apk update && apk add --no-cache \
     nodejs \
     npm \
     sqlite-dev \
-    iproute2
+    iproute2 \
+    tzdata
 
 # 安装 PHP 扩展
 RUN docker-php-ext-install pdo_mysql pcntl
